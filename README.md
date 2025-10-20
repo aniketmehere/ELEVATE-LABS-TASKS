@@ -1,89 +1,57 @@
-Target: 192.168.1.0/24
-Command: nmap -sS 192.168.1.0/24
+# Task 1 — Scan Your Local Network for Open Ports
 
-Starting Nmap 7.98 ( https://nmap.org ) at 2025-10-20 20:26 +0530
-Nmap scan report for 192.168.1.1
-Host is up (0.0096s latency).
-Not shown: 997 filtered tcp ports (no-response)
-PORT    STATE SERVICE
-53/tcp  open  domain
-80/tcp  open  http
-443/tcp open  https
-MAC Address: 44:95:3B:3D:E6:70 (RLTech India Private Limited)
+## Objective
+To identify open ports and active services within the local network using **Nmap**, and analyze potential security risks.  
+This task demonstrates the ability to discover network exposure and understand service behavior on accessible devices.
 
-Nmap scan report for 192.168.1.2
-Host is up (0.0019s latency).
-Not shown: 996 closed tcp ports (reset)
-PORT     STATE SERVICE
-80/tcp   open  http
-554/tcp  open  rtsp
-8000/tcp open  http-alt
-8600/tcp open  asterix
-MAC Address: F6:3A:80:09:7A:EC (Unknown)
+---
 
-Nmap scan report for 192.168.1.3
-Host is up (0.064s latency).
-All 1000 scanned ports on 192.168.1.3 are in ignored states.
-Not shown: 1000 filtered tcp ports (no-response)
-MAC Address: 00:17:7C:8D:68:B8 (Smartlink Network Systems Limited)
+## Tools Used
+- **Nmap (Zenmap GUI)** — Network scanning and port discovery  
 
-Nmap scan report for 192.168.1.32
-Host is up (0.032s latency).
-All 1000 scanned ports on 192.168.1.32 are in ignored states.
-Not shown: 1000 closed tcp ports (reset)
-MAC Address: E6:9E:4F:57:82:61 (Unknown)
+---
 
-Nmap scan report for 192.168.1.186
-Host is up (0.0035s latency).
-Not shown: 996 closed tcp ports (reset)
-PORT     STATE SERVICE
-80/tcp   open  http
-554/tcp  open  rtsp
-8000/tcp open  http-alt
-8600/tcp open  asterix
-MAC Address: F6:3A:80:09:7E:CE (Unknown)
+## Steps Followed
 
-Nmap scan report for 192.168.1.188
-Host is up (0.0047s latency).
-Not shown: 995 closed tcp ports (reset)
-PORT     STATE SERVICE
-80/tcp   open  http
-554/tcp  open  rtsp
-1935/tcp open  rtmp
-8081/tcp open  blackice-icecap
-8082/tcp open  blackice-alerts
-MAC Address: 00:40:BA:DF:F9:5F (Alliant Computer Systems)
+1. **Installed Nmap / Zenmap** on Windows.
+2. **Identified local IP range:**  192.168.1.0/24
 
-Nmap scan report for 192.168.1.189
-Host is up (0.0029s latency).
-Not shown: 995 closed tcp ports (reset)
-PORT      STATE SERVICE
-80/tcp    open  http
-554/tcp   open  rtsp
-8000/tcp  open  http-alt
-8002/tcp  open  teradataordbms
-10009/tcp open  swdtp-sv
-MAC Address: 00:42:99:F9:4C:D3 (Unknown)
+3. **Executed TCP SYN Scan command:**
 
-Nmap scan report for 192.168.1.198
-Host is up (0.0035s latency).
-Not shown: 996 closed tcp ports (reset)
-PORT     STATE SERVICE
-80/tcp   open  http
-554/tcp  open  rtsp
-8000/tcp open  http-alt
-8600/tcp open  asterix
-MAC Address: F6:3A:80:09:7E:20 (Unknown)
+nmap -sS 192.168.1.0/24
+Observed scan results in Zenmap GUI, including open ports, services, and IP addresses.
+Saved results and analyzed open ports and possible risks.
 
-Nmap scan report for host.docker.internal (192.168.1.41)
-Host is up (0.00029s latency).
-Not shown: 994 closed tcp ports (reset)
-PORT     STATE SERVICE
-135/tcp  open  msrpc
-139/tcp  open  netbios-ssn
-445/tcp  open  microsoft-ds
-902/tcp  open  iss-realsecure
-912/tcp  open  apex-mesh
-7070/tcp open  realserver
+**Scan Summary**
+| Host IP Address                         | Open Ports                 | Protocol | Services Detected                                       | MAC Address       | Remarks                             |
+| --------------------------------------- | -------------------------- | -------- | ------------------------------------------------------- | ----------------- | ----------------------------------- |
+| **192.168.1.1**                         | 53, 80, 443                | TCP      | domain, http, https                                     | 00:40:BA:DF:F9:5F | Gateway device or router            |
+| **192.168.1.189**                       | 80, 554, 8000, 8002, 10009 | TCP      | http, rtsp, http-alt, teradataordbms, swdtp-sv          | 00:42:99:F9:4C:D3 | Likely IP camera / streaming device |
+| **192.168.1.198**                       | 80, 554, 8000, 8600        | TCP      | http, rtsp, http-alt, asterisk                          | F6:3A:80:09:7E:20 | Possible VoIP / IoT device          |
+| **192.168.1.41 (host.docker.internal)** | 135, 139, 445, 912, 7070   | TCP      | msrpc, netbios-ssn, microsoft-ds, apex-mesh, realserver | —                 | Local Docker service host           |
 
-Nmap done: 256 IP addresses (9 hosts up) scanned in 29.32 seconds
+
+
+**Analysis of Common Services**
+| Port               | Service              | Description                       | Security Risk                          |
+| ------------------ | -------------------- | --------------------------------- | -------------------------------------- |
+| **53**             | DNS                  | Used for domain name resolution   | DNS poisoning / spoofing attacks       |
+| **80**             | HTTP                 | Unencrypted web traffic           | Data sniffing / MITM attacks           |
+| **443**            | HTTPS                | Secure web traffic                | Misconfigured SSL may lead to exploits |
+| **135/139/445**    | Microsoft RPC/SMB    | File sharing and Windows services | SMB exploits, ransomware propagation   |
+| **554**            | RTSP                 | Media streaming                   | Unauthenticated camera stream access   |
+| **8000/8082/8600** | Alternate HTTP ports | Web interfaces or IoT panels      | Exposed admin panels                   |
+
+
+** Findings**
+Multiple devices (IoT/Camera/Router) running HTTP/RTSP services are detected.
+Ports 80 and 443 are commonly open — indicating web interfaces or admin consoles.
+SMB-related ports (135, 139, 445) on Docker host can be potential vulnerabilities.
+Lack of encryption or authentication on non-HTTPS ports increases exposure.
+
+** Recommendations**
+Close unnecessary ports or restrict access via firewall rules.
+Disable unused services on IoT devices.
+Use strong passwords and encryption on web interfaces.
+Regularly monitor open ports and run vulnerability assessments.
+Keep firmware and software updated.
