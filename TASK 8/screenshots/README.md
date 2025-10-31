@@ -35,7 +35,7 @@ After connecting, the IP changed as shown below:
 ![VPN Connected - IP Changed](vpn.png)
 
 **Screenshot 2:**  
-![VPN IP Details](Screenshot%202025-10-31%20193058.png)
+![VPN IP Details](vpn1.png)
 
 **IP Details:**  
 - **IPv4:** 138.199.7.161  
