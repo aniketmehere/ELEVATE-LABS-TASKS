@@ -32,7 +32,7 @@ Before connecting, my IP reflected my original location (India).
 After connecting, the IP changed as shown below:
 
 **Screenshot 1:**  
-![VPN Connected - IP Changed](.png)
+![VPN Connected - IP Changed](vpn.png)
 
 **Screenshot 2:**  
 ![VPN IP Details](Screenshot%202025-10-31%20193058.png)
