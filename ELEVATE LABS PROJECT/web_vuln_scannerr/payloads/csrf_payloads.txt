@@ -1,3 +1,0 @@
-csrf_token_missing
-weak_anti_csrf
-no_referer_check
