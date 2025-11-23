@@ -1,0 +1,46 @@
+[
+    {
+        "name": "Block All Incoming",
+        "direction": "in",
+        "action": "block",
+        "protocol": "any",
+        "src_ip": "any",
+        "dst_ip": "any",
+        "src_port": "any",
+        "dst_port": "any",
+        "enabled": true
+    },
+    {
+        "name": "Allow HTTP Out",
+        "direction": "out",
+        "action": "allow",
+        "protocol": "tcp",
+        "src_ip": "any",
+        "dst_ip": "any",
+        "src_port": "any",
+        "dst_port": "80",
+        "enabled": true
+    },
+    {
+        "name": "Allow HTTPS Out",
+        "direction": "out",
+        "action": "allow",
+        "protocol": "tcp",
+        "src_ip": "any",
+        "dst_ip": "any",
+        "src_port": "any",
+        "dst_port": "443",
+        "enabled": true
+    },
+    {
+        "name": "Allow DNS",
+        "direction": "both",
+        "action": "allow",
+        "protocol": "udp",
+        "src_ip": "any",
+        "dst_ip": "any",
+        "src_port": "any",
+        "dst_port": "53",
+        "enabled": true
+    }
+]
